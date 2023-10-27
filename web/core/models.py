@@ -1,6 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.db import models
-from . import helpers
-# Create your models here.
+from django.utils.translation import gettext_lazy as _
+from core import helpers
 
 
 class Setting(models.Model):
@@ -25,3 +26,27 @@ class Setting(models.Model):
         verbose_name_plural='網站設定'
     def __str__(self) -> str:
         return "%s" % (self.language)
+    
+class LocaleSetting(models.Model):
+    id = models.CharField('語言代碼',max_length=10,primary_key=True)
+    language = models.CharField('系統語言',max_length=50)
+    class Meta:
+        verbose_name = '翻譯對照表'
+        verbose_name_plural = '翻譯對照表'
+    def __str__(self) -> str:
+        return "%s"%(self.id)
+    
+class TranslateSetting(models.Model):
+    locale = models.ForeignKey('core.LocaleSetting',on_delete=models.CASCADE,related_name='translatesetting_set')
+    raw_string = models.CharField('原始文字',max_length=255)
+    translated_string= models.CharField('翻譯後文字',default='',max_length=255,null=True,blank=True)
+    def clean(self):
+        if trans_obj := TranslateSetting.objects.filter(raw_string=self.raw_string,locale=self.locale):
+            if self.id != trans_obj.first().id:
+                raise ValidationError(_('Raw string already exists'))
+    class Meta:
+        verbose_name= '翻譯文字'
+        verbose_name_plural ='翻譯文字'
+        ordering =['raw_string']
+    def __str__(self) -> str:
+        return ""
