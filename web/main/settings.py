@@ -143,6 +143,7 @@ SHARED_APPS = (
     'django_tenants',  # mandatory
     'customers', # you must list the app where your tenant model resides in
     'django.contrib.contenttypes',
+    'django_elasticsearch_dsl'
 )
 TENANT_APPS = (
     'django.contrib.auth',
@@ -191,4 +192,10 @@ Q_CLUSTER = {
         'host': 'redis',
         'port': 6379,
         'db': 0, }
+}
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'es01:9200'
+    },
 }
