@@ -1,0 +1,6 @@
+<!-- epaper/templates/epaper/new_products_email.txt-->
+
+{{ sitename }} 新品快訊
+{% for product in products %}
+  {{ product.name }} {{ host }}{% url 'products:detail' product.id %}
+{% endfor %}

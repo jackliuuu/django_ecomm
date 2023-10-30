@@ -1,6 +1,5 @@
 from  django.utils.deprecation import MiddlewareMixin
-import os
-from django.db import connection
+
 
 
 class TranslationsMiddleware(MiddlewareMixin):
@@ -9,6 +8,8 @@ class TranslationsMiddleware(MiddlewareMixin):
         from django.utils.translation import trans_real, get_language
         from django.conf import settings
         import gettext
+        import os
+        from django.db import connection
         if settings.USE_I18N:
             try:
                 # Reset gettext.GNUTranslation cache.

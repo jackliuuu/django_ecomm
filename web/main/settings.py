@@ -172,8 +172,8 @@ MEDIA_URL = '/media/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'mailserver'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'iot.nchc@gmail.com'
+EMAIL_HOST_PASSWORD = 'vjsmhklvujzucnbh'
 EMAIL_PORT = 587
 
 #q cluster
