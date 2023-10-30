@@ -14,8 +14,8 @@ from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_ROOT = [os.path.join(BASE_DIR, 'static')]
 
-STATIC_ROOT = [os.path.join(BASE_DIR, 'static/products')]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -153,7 +153,10 @@ TENANT_APPS = (
     'django.contrib.admin',
     'django.contrib.sitemaps',
     'products',
-    'core'
+    'core',
+    'epaper',
+    'django_q',
+    'django_tenants_q'
 )
 INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 SITE_ID = 1
@@ -164,3 +167,28 @@ TENANT_DOMAIN_MODEL = "customers.Domain"  # app.Model
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+#mailserver 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mailserver'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+
+#q cluster
+Q_CLUSTER = {
+    'name': 'example_tenant',
+    'workers': 8,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'redis': {
+        'host': 'redis',
+        'port': 6379,
+        'db': 0, }
+}

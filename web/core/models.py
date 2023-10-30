@@ -39,7 +39,7 @@ class LocaleSetting(models.Model):
 class TranslateSetting(models.Model):
     locale = models.ForeignKey('core.LocaleSetting',on_delete=models.CASCADE,related_name='translatesetting_set')
     raw_string = models.CharField('原始文字',max_length=255)
-    translated_string= models.CharField('翻譯後文字',default='',max_length=255,null=True,blank=True)
+    translate_string= models.CharField('翻譯後文字',default='',max_length=255,null=True,blank=True)
     def clean(self):
         if trans_obj := TranslateSetting.objects.filter(raw_string=self.raw_string,locale=self.locale):
             if self.id != trans_obj.first().id:

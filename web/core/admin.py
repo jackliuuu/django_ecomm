@@ -71,7 +71,7 @@ class SettingAdmin(admin.ModelAdmin):
     ]
 class TranslateSettingInline(admin.TabularInline):
     model = TranslateSetting
-    fields = ('raw_string','translated_string')
+    fields = ('raw_string','translate_string')
 class LocaleSettingAdmin(admin.ModelAdmin):
     search_fields=['id','language']
     fields =('id','language')
@@ -97,7 +97,7 @@ class LocaleSettingAdmin(admin.ModelAdmin):
         '"Plural-Forms: nplurals=1; plural=0;\\n"\n\n'
         for trans_obj in form.instance.translatesetting_set.all():
             message_file += f'msgid "{trans_obj.raw_string}"\n'
-            message_file += f'msgstr "{trans_obj.translated_string}"\n\n'
+            message_file += f'msgstr "{trans_obj.translate_string}"\n\n'
         with open(f"{locale_path}/django.po" , "w") as f:
             f.write(message_file)
         os.system(f"cd {locale_path} && msgfmt django.po -o django.mo")
